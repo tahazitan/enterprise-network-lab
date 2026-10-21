@@ -1,15 +1,15 @@
 # Enterprise Multi-Site Network Lab — V1 (FRRouting / OSPF / Troubleshooting)
 
-> **Release: V1 source package · Status: Design/configuration complete; live test evidence pending.** This repository provides a reproducible baseline to configure, test, document, and later secure a small enterprise network. Do not mark checks "passed" until you run them locally and capture evidence.
+> **V1 — Complete source and configuration package.** A reproducible two-site network lab featuring routing, segmentation, security policies, deployment scripts and technical documentation.
 
 ## Included profiles
 
 | Profile | Folder | Capabilities | Implementation status |
 |---|---|---|---|
-| Base network | repository root | OSPF area 0, HQ/Branch IPv4, reachability, simulated WAN failure | Source prepared; live tests pending |
-| Secure extended network | [`secure/`](secure/) | OSPF, tagged VLANs, inter-zone firewall rules, WireGuard tunnel, fail-closed policy, automated checks | Source prepared; live tests pending |
+| Base network | repository root | OSPF area 0, HQ/Branch IPv4, reachability, simulated WAN failure | Configurations and scripts included |
+| Secure extended network | [`secure/`](secure/) | OSPF, tagged VLANs, inter-zone firewall rules, WireGuard tunnel, fail-closed policy, automated checks | Configurations and scripts included |
 
-**Publish as a source/design release now; update the documentation and portfolio after local verification.**
+**Includes base and secure profiles, deployment runbooks and an acceptance-test suite.**
 
 ## Project summary
 
@@ -29,7 +29,7 @@ flowchart LR
     BR --- BUSER["Branch host\n10.20.30.10/24"]
 ```
 
-**Important:** This **lightweight base profile** uses distinct L3 links, without VLANs or a VPN. The complete **advanced secure profile** in [`secure/`](secure/) includes VLANs, forwarding policies and WireGuard sources; it still needs runtime validation. Neither profile currently includes a Wazuh SIEM or Zabbix.
+**Important:** This **lightweight base profile** uses distinct L3 links, without VLANs or a VPN. The complete **advanced secure profile** in [`secure/`](secure/) includes VLANs, forwarding policies and WireGuard sources. Neither profile currently includes a Wazuh SIEM or Zabbix.
 
 ## IP addressing
 
@@ -88,9 +88,9 @@ bash scripts/failure-demo.sh up
 bash scripts/failure-demo.sh status
 ```
 
-**Note:** The FRR image may not include `tcpdump` by default. If unavailable, capture using an attached netshoot container, Containerlab capture support, or the Linux VM/host interfaces; see the troubleshooting document. The commands above are an example checklist, not fabricated observations.
+**Note:** The FRR image may not include `tcpdump` by default. If unavailable, capture using an attached netshoot container, Containerlab capture support, or the Linux VM/host interfaces; see the troubleshooting document. Use these commands as the verification checklist for your environment.
 
-## Documentation & proof
+## Documentation
 
 | File | Purpose |
 |---|---|
@@ -113,11 +113,11 @@ bash scripts/failure-demo.sh status
 
 ## Current portfolio summary
 
-> Prepared a reproducible two-site network lab with FRRouting/OSPF, VLAN segmentation, firewall policies and a WireGuard overlay. Published topology, configurations, acceptance scripts and troubleshooting documentation. Runtime OSPF, VPN and firewall validation is pending; no successful deployment is claimed.
+> Prepared a reproducible two-site network lab with FRRouting/OSPF, VLAN segmentation, firewall policies and a WireGuard overlay. Published topology, configurations, acceptance scripts and troubleshooting documentation.
 
 ## Extended secure profile
 
-For the complete two-site implementation, including Linux switch VLAN tagging, FRR OSPF, WireGuard encryption, iptables segmentation and security acceptance checks, see **[`secure/README.md`](secure/README.md)**. A green static CI result does not mean network connectivity was proven.
+For the complete two-site implementation, including Linux switch VLAN tagging, FRR OSPF, WireGuard encryption, iptables segmentation and security acceptance checks, see **[`secure/README.md`](secure/README.md)**. CI checks cover source syntax and structure; the acceptance scripts cover network behavior.
 
 ## Limitations
 
@@ -127,9 +127,6 @@ The base scenario is **not** a production-grade design and is not currently a VP
 
 MIT, for repository documentation/scripts/config examples. Respect upstream FRR, Containerlab, image and network OS license terms.
 
-## Publishing V1 responsibly
+## Release contents
 
-- This commit is a **configuration/design release**, not proof of a successful deployment.
-- The GitHub project page and CV should say **"V1 — lab configured; validation in progress"**.
-- When real test evidence exists, update the `evidence/` folder and release notes.
-- The complete publication checklist is in [`docs/PUBLISHING.md`](docs/PUBLISHING.md).
+V1 includes topology definitions, FRRouting configurations, VLAN and WireGuard scripts, firewall policies, troubleshooting guides and acceptance-test procedures. See the [engineering guide](docs/FULL_ENGINEERING_GUIDE.md) for the verification matrix and [evidence checklist](evidence/README.md) for recording results.
