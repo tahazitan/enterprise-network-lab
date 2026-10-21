@@ -1,0 +1,70 @@
+name: secure-enterprise
+
+topology:
+  nodes:
+    hq-rtr:
+      kind: linux
+      image: enterprise-frr-router:local
+      sysctls:
+        net.ipv4.ip_forward: 1
+      binds:
+        - ./configs/hq/frr.conf:/etc/frr/frr.conf
+        - ./configs/hq/daemons:/etc/frr/daemons
+        - ./scripts/init-router.sh:/usr/local/bin/init-router.sh:ro
+      exec:
+        - bash /usr/local/bin/init-router.sh hq
+    branch-rtr:
+      kind: linux
+      image: enterprise-frr-router:local
+      sysctls:
+        net.ipv4.ip_forward: 1
+      binds:
+        - ./configs/branch/frr.conf:/etc/frr/frr.conf
+        - ./configs/branch/daemons:/etc/frr/daemons
+        - ./scripts/init-router.sh:/usr/local/bin/init-router.sh:ro
+      exec:
+        - bash /usr/local/bin/init-router.sh branch
+    hq-switch:
+      kind: linux
+      image: nicolaka/netshoot:latest
+      cmd: sleep infinity
+      binds:
+        - ./scripts/init-switch.sh:/usr/local/bin/init-switch.sh:ro
+      exec:
+        - sh /usr/local/bin/init-switch.sh hq
+    branch-switch:
+      kind: linux
+      image: nicolaka/netshoot:latest
+      cmd: sleep infinity
+      binds:
+        - ./scripts/init-switch.sh:/usr/local/bin/init-switch.sh:ro
+      exec:
+        - sh /usr/local/bin/init-switch.sh branch
+    hq-it:
+      kind: linux
+      image: nicolaka/netshoot:latest
+      cmd: sleep infinity
+      exec:
+        - ip addr add 10.10.10.10/24 dev eth1
+        - ip route replace default via 10.10.10.1
+    hq-users:
+      kind: linux
+      image: nicolaka/netshoot:latest
+      cmd: sleep infinity
+      exec:
+        - ip addr add 10.10.20.10/24 dev eth1
+        - ip route replace default via 10.10.20.1
+    branch-user:
+      kind: linux
+      image: nicolaka/netshoot:latest
+      cmd: sleep infinity
+      exec:
+        - ip addr add 10.20.30.10/24 dev eth1
+        - ip route replace default via 10.20.30.1
+  links:
+    - endpoints: ["hq-rtr:eth1", "branch-rtr:eth1"]
+    - endpoints: ["hq-rtr:eth2", "hq-switch:eth1"]
+    - endpoints: ["hq-switch:eth2", "hq-it:eth1"]
+    - endpoints: ["hq-switch:eth3", "hq-users:eth1"]
+    - endpoints: ["branch-rtr:eth2", "branch-switch:eth1"]
+    - endpoints: ["branch-switch:eth2", "branch-user:eth1"]

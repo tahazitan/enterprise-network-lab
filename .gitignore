@@ -4,11 +4,13 @@ __pycache__/
 .vscode/
 .idea/
 clab-*/
-**/.secrets/
+secure/.secrets/
 secure/evidence/runs/
 .env
 .env.*
 !*.example
+
+**/.secrets/
 *.key
 *.pem
 *.pcap
