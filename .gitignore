@@ -1,0 +1,16 @@
+.DS_Store
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+clab-*/
+**/.secrets/
+secure/evidence/runs/
+.env
+.env.*
+!*.example
+*.key
+*.pem
+*.pcap
+*.pcapng
+*.zip
