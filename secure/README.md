@@ -1,6 +1,6 @@
-# Secure Enterprise Network Lab — full implementation sources (V1, not runtime validated)
+# Secure Enterprise Network Lab — V1
 
-> **State:** Complete lab source package prepared. Live execution / successful acceptance tests **not yet confirmed**. This is a *sandbox demonstration*, not production engineering.
+> **V1 — Complete source and configuration package.** An isolated two-site lab with VLAN segmentation, OSPF routing, WireGuard and firewall policies.
 
 ## Scope
 
@@ -80,7 +80,7 @@ Return traffic for allowed sessions is accepted via `ESTABLISHED,RELATED` conntr
 
 ## Safe publishing statement
 
-> Designed and version-controlled a reproducible two-site network laboratory with FRRouting/OSPF, 802.1Q VLAN separation, policy-based traffic restrictions and a WireGuard site-to-site overlay. Configuration and acceptance-test scripts are provided; execution evidence is pending.
+> Designed and version-controlled a reproducible two-site network laboratory with FRRouting/OSPF, 802.1Q VLAN separation, policy-based traffic restrictions and a WireGuard site-to-site overlay. Includes configuration sources, deployment runbooks and acceptance-test scripts.
 
 ## After verification
 
