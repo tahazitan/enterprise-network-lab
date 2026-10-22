@@ -1,3 +1,16 @@
+# Capturing real network evidence
+
+After deploying the **base topology** in Linux and confirming Docker is running:
+
+```bash
+make base-up
+make base-evidence
+```
+
+Or run `bash scripts/capture-evidence.sh` directly. It writes a timestamped folder under `evidence/runs/` containing actual OSPF-neighbor, route, ping and full acceptance-check logs, plus a `REPORT.md` summary. The script performs read-only observations and **returns a failing exit status if the acceptance suite fails**.
+
+`evidence/runs/` is excluded from Git because raw captures may contain environment details. Review and sanitize selected logs before any public release. A checked-in script or CI source test is **not** evidence of a successful live topology.
+
 # Evidence checklist — add REAL output only
 
 - [ ] `01-topology.png`: live Containerlab topology / inspect output.
