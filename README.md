@@ -57,7 +57,8 @@ flowchart LR
 4. Run `bash scripts/verify.sh` (or `sudo bash scripts/verify.sh` if your user cannot access the Docker socket). The script waits up to 60 seconds for OSPF convergence.
 5. If tests fail, follow [Troubleshooting](docs/troubleshooting.md) before drawing conclusions.
 6. Collect real screenshots/captures following [Evidence checklist](evidence/README.md).
-7. Tear down with `sudo containerlab destroy -t topology.clab.yml --cleanup`.
+7. Capture real, locally stored evidence with `make base-evidence` (or `bash scripts/capture-evidence.sh`). Review logs under `evidence/runs/` before publishing; a source-only CI pass is not a live validation.
+8. Tear down with `sudo containerlab destroy -t topology.clab.yml --cleanup`.
 
 > Image tags are set to `latest` for a starter release. For a portfolio release, **pin tested container image versions/digests** and record them in the environment section of the report.
 
